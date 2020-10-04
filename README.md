@@ -1,3 +1,32 @@
+## 튜토리얼 설명 페이지
+
+- https://velopert.com/1954
+- https://pro-self-studier.tistory.com/117?category=668422
+
+---
+
+## 진행상황
+
+- (1005)
+  - create-react-app 을 활용함. 사용될 모듈들을 설치하였음. 필요없어 보이는 파일들을 제거했음.
+  - 2-3) (webpack css-loader 와 style-loader 설치 및 적용) 부분 : 일단 무시했음
+  - (public/index.html) Materializecss 적용을 시도함. 잘 된 상황인지 모르겠음.
+  - (public/index.html) jQuery 적용을 시도함. 잘 된 상황인지 모르겠음.
+  - 이상 내용들을 챙겨서 git 저장소에 올림 (https://github.com/rbdkqk/memo-app-client.git)
+
+---
+
+## 해야 할 내용
+
+- 클라이언트 구성하기. (css, jQuery 등 아직 잘 모르는 내용들이 있는데 걱정임)
+- AWS 배포하기
+
+<!-- ---
+
+## (이하는 create-react-app 의 기본 readme.md 에 포함된 내용들임)
+
+---
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
@@ -65,4 +94,4 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 
 ### `yarn build` fails to minify
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify -->
