@@ -2,6 +2,7 @@
 
 - https://velopert.com/1954
 - https://pro-self-studier.tistory.com/117?category=668422
+- 목표 : https://memo.vlpt.us/
 
 ---
 
