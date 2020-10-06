@@ -9,18 +9,30 @@
 ## 진행상황
 
 - (1005)
+
   - create-react-app 을 활용함. 사용될 모듈들을 설치하였음. 필요없어 보이는 파일들을 제거했음.
   - 2-3) (webpack css-loader 와 style-loader 설치 및 적용) 부분 : 일단 무시했음
   - (public/index.html) Materializecss 적용을 시도함. 잘 된 상황인지 모르겠음.
   - (public/index.html) jQuery 적용을 시도함. 잘 된 상황인지 모르겠음.
   - 이상 내용들을 챙겨서 git 저장소에 올림 (https://github.com/rbdkqk/memo-app-client.git)
 
+- (1006)
+  - 구현 완료 : 회원가입/로그인/로그아웃/로그인확인(세션유지)
+  - 보완해야 할 점
+    - redux 이해가 많이 부족함. (connect 등)
+    - 전반적인 구조가 익숙해져야 한다.
+    - Materialize 의 toast 가 제대로 작동하지 않는 것 같음.
+    - 로그인 유지에 관한 세션/쿠기 부분의 이해가 부족함.
+
 ---
 
 ## 해야 할 내용
 
-- 클라이언트 구성하기. (css, jQuery 등 아직 잘 모르는 내용들이 있는데 걱정임)
+- 메모 어플리케이션의 CRUD 클라이언트 구성하기. (css, jQuery 등 아직 잘 모르는 내용들이 있는데 걱정임)
 - AWS 배포하기
+- redux 공부하기
+- Materialize 공부하기
+- 로그인 유지에 관한 세션/쿠기 부분 공부하기
 
 <!-- ---
 
