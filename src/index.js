@@ -21,7 +21,9 @@ ReactDOM.render(
       <div>
         <Route path="/" component={App} />
         {/* <IndexRoute component={Home} /> */}
-        {/* <Route path="/home" component={Home} /> */}
+        <Route exact path="/" component={Home} />
+        {/* exact 속성을 추가하게 되면 정확한 path 경로에만 적용되는 라우트 라는 뜻입니다.
+          따라서 이 라우트는 '/' 경로에서만 작동하는 라우트가 됩니다. */}
         <Route path="/register" component={Register} />
         <Route path="/login" component={Login} />
       </div>

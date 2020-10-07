@@ -2,9 +2,11 @@
 // 코드를 작성하면서 authentication 이외의 리듀서도 index.js 에 import 할 예정입니다.
 
 import authentication from "./authentication";
+import memo from "./memo";
 
 import { combineReducers } from "redux";
 
 export default combineReducers({
   authentication,
+  memo,
 });
