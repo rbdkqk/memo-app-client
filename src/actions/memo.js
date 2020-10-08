@@ -13,7 +13,11 @@ export function memoPostRequest(contents) {
     // axios 를 통해 API 와 통신 : API 에 객체를 전달하는데, 이 객체는 contents 필드의 값이 thunk 함수의 인자로 들어온 값인 객체입니다.
     return (
       axios
-        .post("http://localhost:4000/api/memo/", { contents })
+        .post(
+          "http://localhost:4000/api/memo/",
+          { contents },
+          { withCredentials: true }
+        )
         // 통신을 마치고 API 에서 객체를 리턴한 뒤에,
         .then((response) => {
           // 그 객체가 성공 객체이면 성공 action 객체를 리듀서에 전달하고,

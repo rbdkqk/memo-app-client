@@ -36,7 +36,11 @@ export function registerRequest(username, password) {
     dispatch(register());
 
     return axios
-      .post("http://localhost:4000/api/account/signup", { username, password })
+      .post(
+        "http://localhost:4000/api/account/signup",
+        { username, password },
+        { withCredentials: true }
+      )
       .then((response) => {
         dispatch(registerSuccess());
       })
@@ -90,7 +94,11 @@ export function loginRequest(username, password) {
 
     // API REQUEST
     return axios
-      .post("http://localhost:4000/api/account/signin", { username, password })
+      .post(
+        "http://localhost:4000/api/account/signin",
+        { username, password },
+        { withCredentials: true }
+      )
       .then((response) => {
         // SUCCEED
         dispatch(loginSuccess(username));
@@ -130,7 +138,9 @@ export function getStatusRequest() {
     dispatch(getStatus());
 
     return axios
-      .get("http://localhost:4000/api/account/getInfo")
+      .get("http://localhost:4000/api/account/getInfo", {
+        withCredentials: true,
+      })
       .then((response) => {
         dispatch(getStatusSuccess(response.data.info.username)); //HTTP 틍신을 통해 username을 빋이옴
       })
@@ -165,7 +175,9 @@ export function getStatusFailure() {
 export function logoutRequest() {
   return (dispatch) => {
     return axios
-      .post("http://localhost:4000/api/account/logout")
+      .post("http://localhost:4000/api/account/signout", {
+        withCredentials: true,
+      })
       .then((response) => {
         dispatch(logout());
       });
