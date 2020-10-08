@@ -1,7 +1,11 @@
 import React from "react";
 import { Write, MemoList } from "../components";
 import { connect } from "react-redux";
-import { memoPostRequest, memoListRequest } from "../actions/memo";
+import {
+  memoPostRequest,
+  memoListRequest,
+  memoEditRequest,
+} from "../actions/memo";
 
 import Materialize from "materialize-css";
 import $ from "jquery";
@@ -59,6 +63,47 @@ class Home extends React.Component {
     });
   };
 
+  handleEdit = (id, index, contents) => {
+    return this.props.memoEditRequest(id, index, contents).then(() => {
+      if (this.props.editStatus.status === "SUCCESS") {
+        Materialize.toast("Success!", 2000);
+      } else {
+        /*
+                  ERROR CODES
+                      1: INVALID ID,
+                      2: CONTENTS IS NOT STRING
+                      3: EMPTY CONTENTS
+                      4: NOT LOGGED IN
+                      5: NO RESOURCE
+                      6: PERMISSION FAILURE
+                */
+        let errorMessage = [
+          "Something broke",
+          "Contents should be string",
+          "Please write something",
+          "You are not logged in",
+          "That memo does not exist anymore",
+          "You do not have permission",
+        ];
+
+        let error = this.props.editStatus.error;
+
+        // NOTIFY ERROR
+        let $toastContent = $(
+          '<span style="color: #FFB4BA">' + errorMessage[error - 1] + "</span>"
+        );
+        Materialize.toast($toastContent, 2000);
+
+        // IF NOT LOGGED IN, REFRESH THE PAGE AFTER 2 SECONDS
+        if (error === 4) {
+          setTimeout(() => {
+            window.location.reload(false);
+          }, 2000);
+        }
+      }
+    });
+  };
+
   componentDidMount() {
     // DO THE INITIAL LOADING
     this.props.memoListRequest(true, undefined, undefined, undefined);
@@ -73,6 +118,7 @@ class Home extends React.Component {
         <MemoList
           data={this.props.memoData}
           currentUser={this.props.currentUser}
+          onEdit={this.handleEdit}
         />
       </div>
     );
@@ -88,6 +134,7 @@ const mapStateToProps = (state) => {
     memoData: state.memo.list.data,
     listStatus: state.memo.list.status,
     isLast: state.memo.list.isLast,
+    editStatus: state.memo.edit,
   };
 };
 
@@ -98,6 +145,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     memoListRequest: (isInitial, listType, id, username) => {
       return dispatch(memoListRequest(isInitial, listType, id, username));
+    },
+    memoEditRequest: (id, index, contents) => {
+      return dispatch(memoEditRequest(id, index, contents));
     },
   };
 };

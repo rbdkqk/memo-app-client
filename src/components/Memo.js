@@ -6,6 +6,11 @@ import Materialize from "materialize-css";
 import $ from "jquery";
 
 class Memo extends Component {
+  state = {
+    editMode: false,
+    value: this.props.data.contents,
+  };
+
   // componentDidUpdate() {
   //   // WHEN COMPONENT UPDATES, INITIALIZE DROPDOWN
   //   // (TRIGGERED WHEN LOGGED IN)
@@ -22,6 +27,30 @@ class Memo extends Component {
   //   });
   // }
 
+  toggleEdit = () => {
+    if (this.state.editMode) {
+      let id = this.props.data._id;
+      let index = this.props.index;
+      let contents = this.state.value;
+
+      this.props.onEdit(id, index, contents).then(() => {
+        this.setState({
+          editMode: !this.state.editMode,
+        });
+      });
+    } else {
+      this.setState({
+        editMode: !this.state.editMode,
+      });
+    }
+  };
+
+  handleChange = (e) => {
+    this.setState({
+      value: e.target.value,
+    });
+  };
+
   render() {
     // 드롭다운 메뉴인데, 실패
     const dropDownMenu = (
@@ -35,7 +64,7 @@ class Memo extends Component {
         </a>
         <ul id={`dropdown-${this.props.data._id}`} className="dropdown-content">
           <li>
-            <a>Edit</a>
+            <a onClick={this.toggleEdit}>Edit</a>
           </li>
           <li>
             <a>Remove</a>
@@ -62,13 +91,36 @@ class Memo extends Component {
       </div>
     );
 
-    return <div className="container memo">{memoView}</div>;
+    const editView = (
+      <div className="write">
+        <div className="card">
+          <div className="card-content">
+            <textarea
+              className="materialize-textarea"
+              value={this.state.value}
+              onChange={this.handleChange}
+            ></textarea>
+          </div>
+          <div className="card-action">
+            <a onClick={this.toggleEdit}>OK</a>
+          </div>
+        </div>
+      </div>
+    );
+
+    return (
+      <div className="container memo">
+        {this.state.editMode ? editView : memoView}
+      </div>
+    );
   }
 }
 
 Memo.propTypes = {
   data: PropTypes.object,
   ownership: PropTypes.bool,
+  onEdit: PropTypes.func,
+  index: PropTypes.number,
 };
 
 Memo.defaultProps = {
@@ -84,6 +136,10 @@ Memo.defaultProps = {
     starred: [],
   },
   ownership: true,
+  onEdit: (id, index, contents) => {
+    console.error("onEdit function not defined");
+  },
+  index: -1,
 };
 
 export default Memo;
