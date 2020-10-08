@@ -149,6 +149,40 @@ export default function memo(state = initialState, action) {
           error: action.error,
         },
       };
+
+    /* MEMO REMOVE */
+    case types.MEMO_REMOVE:
+      return {
+        ...state,
+        remove: {
+          ...state.remove,
+          status: "WAITING",
+          error: -1,
+        },
+      };
+    case types.MEMO_REMOVE_SUCCESS:
+      let removeBefore = state.list.data.slice(0, action.index);
+      let removeAfter = state.list.data.slice(action.index + 1);
+      return {
+        ...state,
+        remove: {
+          ...state.remove,
+          status: "SUCCESS",
+        },
+        list: {
+          ...state.list,
+          data: [...removeBefore, ...removeAfter],
+        },
+      };
+    case types.MEMO_REMOVE_FAILURE:
+      return {
+        ...state,
+        remove: {
+          ...state.remove,
+          status: "FAILURE",
+          error: action.error,
+        },
+      };
     default:
       return state;
   }

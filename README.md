@@ -17,12 +17,20 @@
   - 이상 내용들을 챙겨서 git 저장소에 올림 (https://github.com/rbdkqk/memo-app-client.git)
 
 - (1006)
+
   - 구현 완료 : 회원가입/로그인/로그아웃/로그인확인(세션유지)
   - 보완해야 할 점
     - redux 이해가 많이 부족함. (connect 등)
     - 전반적인 구조가 익숙해져야 한다.
     - Materialize 의 toast 가 제대로 작동하지 않는 것 같음.
     - 로그인 유지에 관한 세션/쿠기 부분의 이해가 부족함.
+
+- (1009)
+  - 구현 완료 : 메모작성/조회/수정/삭제
+    - 세션 유지에 관한 `{ withCredentials: true }` 부분 (질문 글 : https://github.com/codestates/help-desk/issues/2118)
+  - 보완해야 할 점
+    - 전반적인 구조를 아직 거의 이해하지 못하고 코드만 일단 갖다넣음. 이해가 없으니 하나하나 다시 봐야 한다.
+    - `dropdown is not a function` 에러때문에, 수정/삭제 기능이 실제로 잘 구현되는지를 확인하지 못함. (Materialize 와 jquery 때문인지, 공부 필요)
 
 ---
 
@@ -33,6 +41,9 @@
 - redux 공부하기
 - Materialize 공부하기
 - 로그인 유지에 관한 세션/쿠기 부분 공부하기
+- Materialize 와 jquery 때문인지, 구현되지 않은 기능이 많다. 공부해야 할 듯... (toast, dropdown 등등)
+- "애니메이션 기능 추가" 부분 할 차례임 (https://pro-self-studier.tistory.com/121?category=668422)
+- "별점 주기 및 user 검색 / 담벼락" 기능은 구현할 수 있을지 의문임
 
 <!-- ---
 

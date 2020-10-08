@@ -5,6 +5,7 @@ import {
   memoPostRequest,
   memoListRequest,
   memoEditRequest,
+  memoRemoveRequest,
 } from "../actions/memo";
 
 import Materialize from "materialize-css";
@@ -104,6 +105,52 @@ class Home extends React.Component {
     });
   };
 
+  handleRemove = (id, index) => {
+    this.props.memoRemoveRequest(id, index).then(() => {
+      if (this.props.removeStatus.status === "SUCCESS") {
+        // LOAD MORE MEMO IF THERE IS NO SCROLLBAR
+        // 1 SECOND LATER. (ANIMATION TAKES 1SEC)
+        // 메모를 지우는 통신을 성공하고 1초 뒤에 스크롤이 있는지 확인 => 없으면 전 메모 불러와 스크롤 생성
+        setTimeout(() => {
+          if ($("body").height() < $(window).height()) {
+            this.loadOldMemo();
+          }
+        }, 1000);
+      } else {
+        // ERROR
+        /*
+                DELETE MEMO: DELETE /api/memo/:id
+                ERROR CODES
+                    1: INVALID ID
+                    2: NOT LOGGED IN
+                    3: NO RESOURCE
+                    4: PERMISSION FAILURE
+            */
+        let errorMessage = [
+          "Something broke",
+          "You are not logged in",
+          "That memo does not exist",
+          "You do not have permission",
+        ];
+
+        // NOTIFY ERROR
+        let $toastContent = $(
+          '<span style="color: #FFB4BA">' +
+            errorMessage[this.props.removeStatus.error - 1] +
+            "</span>"
+        );
+        Materialize.toast($toastContent, 2000);
+
+        // IF NOT LOGGED IN, REFRESH THE PAGE
+        if (this.props.removeStatus.error === 2) {
+          setTimeout(() => {
+            location.reload(false);
+          }, 2000);
+        }
+      }
+    });
+  };
+
   componentDidMount() {
     // DO THE INITIAL LOADING
     this.props.memoListRequest(true, undefined, undefined, undefined);
@@ -119,6 +166,7 @@ class Home extends React.Component {
           data={this.props.memoData}
           currentUser={this.props.currentUser}
           onEdit={this.handleEdit}
+          onRemove={this.handleRemove}
         />
       </div>
     );
@@ -135,6 +183,7 @@ const mapStateToProps = (state) => {
     listStatus: state.memo.list.status,
     isLast: state.memo.list.isLast,
     editStatus: state.memo.edit,
+    removeStatus: state.memo.remove,
   };
 };
 
@@ -148,6 +197,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     memoEditRequest: (id, index, contents) => {
       return dispatch(memoEditRequest(id, index, contents));
+    },
+    memoRemoveRequest: (id, index) => {
+      return dispatch(memoRemoveRequest(id, index));
     },
   };
 };

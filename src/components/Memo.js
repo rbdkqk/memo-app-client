@@ -51,6 +51,12 @@ class Memo extends Component {
     });
   };
 
+  handleRemove = () => {
+    let id = this.props.data._id;
+    let index = this.props.index;
+    this.props.onRemove(id, index);
+  };
+
   render() {
     // 드롭다운 메뉴인데, 실패
     const dropDownMenu = (
@@ -67,7 +73,7 @@ class Memo extends Component {
             <a onClick={this.toggleEdit}>Edit</a>
           </li>
           <li>
-            <a>Remove</a>
+            <a onClick={this.handleRemove}>Remove</a>
           </li>
         </ul>
       </div>
@@ -121,6 +127,7 @@ Memo.propTypes = {
   ownership: PropTypes.bool,
   onEdit: PropTypes.func,
   index: PropTypes.number,
+  onRemove: PropTypes.func,
 };
 
 Memo.defaultProps = {
@@ -140,6 +147,9 @@ Memo.defaultProps = {
     console.error("onEdit function not defined");
   },
   index: -1,
+  onRemove: (id, index) => {
+    console.error("remove function not defined");
+  },
 };
 
 export default Memo;
