@@ -1,7 +1,7 @@
 import React from "react";
-import { Write } from "../components";
+import { Write, MemoList } from "../components";
 import { connect } from "react-redux";
-import { memoPostRequest } from "../actions/memo";
+import { memoPostRequest, memoListRequest } from "../actions/memo";
 
 import Materialize from "materialize-css";
 import $ from "jquery";
@@ -59,12 +59,22 @@ class Home extends React.Component {
     });
   };
 
+  componentDidMount() {
+    // DO THE INITIAL LOADING
+    this.props.memoListRequest(true, undefined, undefined, undefined);
+  }
+
   render() {
     const write = <Write onPost={this.handlePost} />;
 
     return (
-      // 로그인 된 상태에서만 Write 컴포넌트를 렌더링하도록 설정했습니다.
-      <div className="wrapper">{this.props.isLoggedIn ? write : undefined}</div>
+      <div className="wrapper">
+        {this.props.isLoggedIn ? write : undefined}
+        <MemoList
+          data={this.props.memoData}
+          currentUser={this.props.currentUser}
+        />
+      </div>
     );
   }
 }
@@ -74,6 +84,10 @@ const mapStateToProps = (state) => {
   return {
     isLoggedIn: state.authentication.status.isLoggedIn,
     postStatus: state.memo.post,
+    currentUser: state.authentication.status.currentUser,
+    memoData: state.memo.list.data,
+    listStatus: state.memo.list.status,
+    isLast: state.memo.list.isLast,
   };
 };
 
@@ -81,6 +95,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     memoPostRequest: (contents) => {
       return dispatch(memoPostRequest(contents));
+    },
+    memoListRequest: (isInitial, listType, id, username) => {
+      return dispatch(memoListRequest(isInitial, listType, id, username));
     },
   };
 };
